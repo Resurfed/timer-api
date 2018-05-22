@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'maps.apps.MapsConfig',
     'players.apps.PlayersConfig',
-    'times.apps.TimesConfig'
+    'times.apps.TimesConfig',
+    'servers.apps.ServersConfig',
 ]
 
 MIDDLEWARE = [
