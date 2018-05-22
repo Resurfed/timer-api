@@ -12,4 +12,4 @@ class MapSerializer(serializers.ModelSerializer):
 class ZoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = Zone
-fields = '__all__'
+        fields = '__all__'
