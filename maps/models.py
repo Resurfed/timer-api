@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.timezone import now
 
 class Author(models.Model):
     """ Course Author model """
@@ -31,10 +31,10 @@ class Map(models.Model):
         Author,
         on_delete=models.SET_NULL,
         blank=True,
-        null=True
-    ),
-    last_played = models.DateTimeField(),
-    added = models.DateTimeField(),
+        null=True,
+    )
+    last_played = models.DateTimeField(default=now, blank=True)
+    added = models.DateTimeField(default=now, blank=True)
     hours_played = models.FloatField()
 
     def __str__(self):
