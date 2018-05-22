@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'maps.apps.MapsConfig',
+    'players.apps.PlayersConfig',
+    'times.apps.TimesConfig'
 ]
 
 MIDDLEWARE = [
