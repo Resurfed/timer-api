@@ -14,10 +14,7 @@ class Author(models.Model):
 
 
 class Priority(models.Model):
-    name = models.CharField(max_length=30)
-
-
-class CourseType(models.Model):
+    """ Priority model """
     name = models.CharField(max_length=30)
 
 
@@ -41,21 +38,32 @@ class Course(models.Model):
     author = models.ForeignKey(
         Author,
         on_delete=models.SET_NULL,
-        blank=True, null=True
+        blank=True,
+        null=True
     )
 
     checkpoints = models.SmallIntegerField()
     difficulty = models.SmallIntegerField(blank=True, default=0)
-    course_type = models.ForeignKey(CourseType, on_delete=models.DO_NOTHING)
-    priority = models.ForeignKey(Priority, models.DO_NOTHING)
+
+    priority = models.ForeignKey(
+        Priority,
+        models.DO_NOTHING,
+        blank=True,
+        null=True
+    )
+
+    BEHAVIOR_CHOICES = (('N', "None"), ('S', "Staged"), ('L', "Linear"))
+
+    behavior = models.CharField(
+        max_length=1,
+        blank=True,
+        choices=BEHAVIOR_CHOICES,
+        default='N'
+    )
 
 
 class Zone(models.Model):
     """ Zone model """
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    start_x = models.FloatField()
-    start_y = models.FloatField()
-    start_z = models.FloatField()
-    end_x = models.FloatField()
-    end_y = models.FloatField()
-    end_z = models.FloatField()
+    start = models.CharField(max_length=60)
+    end = models.CharField(max_length=60)
