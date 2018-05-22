@@ -12,10 +12,16 @@ class Author(models.Model):
         null=True
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Priority(models.Model):
     """ Priority model """
     name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
 
 
 class Map(models.Model):
@@ -24,11 +30,15 @@ class Map(models.Model):
     author = models.ForeignKey(
         Author,
         on_delete=models.SET_NULL,
-        blank=True, null=True
+        blank=True,
+        null=True
     ),
     last_played = models.DateTimeField(),
     added = models.DateTimeField(),
     hours_played = models.FloatField()
+
+    def __str__(self):
+        return self.name
 
 
 class Course(models.Model):
@@ -47,7 +57,7 @@ class Course(models.Model):
 
     priority = models.ForeignKey(
         Priority,
-        models.DO_NOTHING,
+        on_delete=models.DO_NOTHING,
         blank=True,
         null=True
     )
@@ -61,9 +71,15 @@ class Course(models.Model):
         default='N'
     )
 
+    def __str__(self):
+        return "{} course {}".format(self.map, self.pk)
+
 
 class Zone(models.Model):
     """ Zone model """
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     start = models.CharField(max_length=60)
     end = models.CharField(max_length=60)
+
+    def __str__(self):
+        return "{} [{}], [{}]".format(self.course, self.start, self.end)
