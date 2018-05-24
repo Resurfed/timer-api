@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'players.apps.PlayersConfig',
     'times.apps.TimesConfig',
     'servers.apps.ServersConfig',
+    'keys.apps.KeysConfig'
 ]
 
 MIDDLEWARE = [
