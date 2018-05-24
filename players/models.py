@@ -14,7 +14,7 @@ class Player(models.Model):
 
 
 class IPAddress(models.Model):
-    player = models.ManyToManyField(Player)
+    player = models.ManyToManyField(Player, related_name='ip_addresses')
     ip = models.GenericIPAddressField()
     first_used = models.DateTimeField(default=now, blank=True)
     last_used = models.DateTimeField(default=now, blank=True)
