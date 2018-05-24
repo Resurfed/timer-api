@@ -20,10 +20,6 @@ class Migration(migrations.Migration):
             model_name='server',
             name='port',
         ),
-        migrations.RemoveField(
-            model_name='server',
-            name='token',
-        ),
         migrations.AlterUniqueTogether(
             name='server',
             unique_together={('key',)},
