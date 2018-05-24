@@ -18,7 +18,30 @@ class Author(models.Model):
 
 class Priority(models.Model):
     """ Priority model """
-    name = models.CharField(max_length=30)
+    name = models.CharField(unique=True, max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
+class Behavior(models.Model):
+    """ Behavior model """
+    name = models.CharField(unique=True, max_length=30)
+    staged = models.BooleanField()
+
+    PREHOP_CHOICES = (
+        ('NO', "None"),
+        ('SP', "Spawns"),
+        ('FS', "First Spawn"),
+        ('GL', "Global")
+    )
+
+    prehop = models.CharField(
+        max_length=2,
+        choices=PREHOP_CHOICES,
+        blank=True,
+        default='NO'
+    )
 
     def __str__(self):
         return self.name
@@ -27,12 +50,14 @@ class Priority(models.Model):
 class Map(models.Model):
     """ Map model """
     name = models.CharField(unique=True, max_length=50)
+
     author = models.ForeignKey(
         Author,
         on_delete=models.SET_NULL,
         blank=True,
-        null=True,
+        null=True
     )
+
     last_played = models.DateTimeField(default=now, blank=True)
     added = models.DateTimeField(default=now, blank=True)
     hours_played = models.FloatField()
@@ -52,8 +77,8 @@ class Course(models.Model):
         null=True
     )
 
-    checkpoints = models.SmallIntegerField()
     difficulty = models.SmallIntegerField(blank=True, default=0)
+    checkpoints = models.SmallIntegerField()
 
     priority = models.ForeignKey(
         Priority,
@@ -62,13 +87,11 @@ class Course(models.Model):
         null=True
     )
 
-    BEHAVIOR_CHOICES = (('N', "None"), ('S', "Staged"), ('L', "Linear"))
-
-    behavior = models.CharField(
-        max_length=1,
+    behavior = models.ForeignKey(
+        Behavior,
+        on_delete=models.DO_NOTHING,
         blank=True,
-        choices=BEHAVIOR_CHOICES,
-        default='N'
+        null=True
     )
 
     def __str__(self):
