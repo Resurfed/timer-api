@@ -3,7 +3,6 @@ from django.utils.timezone import now
 
 
 class Player(models.Model):
-
     """ Map model """
     name = models.CharField(max_length=50)
     auth = models.CharField(unique=True, max_length=64)
@@ -14,7 +13,8 @@ class Player(models.Model):
 
 
 class IPAddress(models.Model):
-    player = models.ManyToManyField(Player, related_name='ip_addresses')
+    """ IP Model """
+    player = models.ForeignKey(Player, on_delete=models.DO_NOTHING, related_name="ip_addresses")
     ip = models.GenericIPAddressField()
     first_used = models.DateTimeField(default=now, blank=True)
     last_used = models.DateTimeField(default=now, blank=True)
