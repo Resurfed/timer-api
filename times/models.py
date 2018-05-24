@@ -21,13 +21,12 @@ class Time(models.Model):
 
 
 class Checkpoint(models.Model):
+
+    record = models.OneToOneField(Time, on_delete=models.CASCADE, primary_key=True)
+
     time = models.FloatField()
     stage_time = models.FloatField()
-    record = models.ForeignKey(Time, on_delete=models.CASCADE)
     checkpoint = models.IntegerField()
     enter_velocity = models.CharField(max_length=40, blank=True, null=True)
     exit_velocity = models.CharField(max_length=40, blank=True, null=True)
     avg_velocity = models.CharField(max_length=40, blank=True, null=True)
-
-    class Meta:
-        unique_together = (('record'),)
