@@ -3,4 +3,8 @@ from .models import Key
 # Register your models here.
 
 
-admin.site.register(Key)
+class KeyAdmin(admin.ModelAdmin):
+    readonly_fields = ['key']
+
+
+admin.site.register(Key, KeyAdmin)

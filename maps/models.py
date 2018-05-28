@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 
+
 class Author(models.Model):
     """ Course Author model """
     name = models.CharField(unique=True, max_length=50)
@@ -64,6 +65,9 @@ class Map(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-id']
 
 
 class Course(models.Model):
