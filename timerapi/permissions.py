@@ -1,11 +1,12 @@
-from rest_framework.permissions import AllowAny
+from rest_framework import permissions, exceptions
 from keys.models import Key
 
 
-class APIKeyRequired(AllowAny):
+class APIKeyRequired(permissions.BasePermission):
+    @staticmethod
+    def get_key(request):
 
-    def get_key(self, request):
-        key = request.GET.get('key') if request.method == 'GET' else request.data.get('key')
+        key = request.META.get('HTTP_API_KEY', '')
 
         if key is None:
             return None
@@ -23,7 +24,21 @@ class APIKeyRequired(AllowAny):
 
         key = self.get_key(request)
 
-        return False if key is None else True
+        if key is None:
+            raise exceptions.PermissionDenied(detail='API key missing or invalid')
+
+        return True
+
+    def has_object_permission(self, request, view, obj):
+
+        if request.user.is_authenticated:
+            return True
+
+        safe = request.method in permissions.SAFE_METHODS
+        if safe:
+            return True
+        else:
+            raise exceptions.PermissionDenied(detail='You do not have permissions to do this action')
 
 
 class FullAccessKeyRequired(APIKeyRequired):
@@ -37,4 +52,7 @@ class FullAccessKeyRequired(APIKeyRequired):
         if key is not None and key.level == 2:
             return True
 
-        return False
+        raise exceptions.PermissionDenied(detail='You do not have permissions to view this content')
+
+    def has_object_permission(self, request, view, obj):
+        return True
