@@ -1,10 +1,7 @@
-from django.shortcuts import render
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, filters
+from rest_framework import generics
 from .models import Map, Zone, Course, Author
 from .serializers import MapSerializer, ZoneSerializer, CourseSerializer, AuthorSerializer
 from .filters import MapFilter, CourseFilter, ZoneFilter
-from django_filters import rest_framework as filters
 
 
 class MapList(generics.ListCreateAPIView):
