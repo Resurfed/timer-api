@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, filters
 from .models import Player, IPAddress
 from .serializers import PlayerSerializer, IPSerializer
@@ -7,8 +8,8 @@ from timerapi.permissions import APIKeyRequired, FullAccessKeyRequired
 class PlayerList(generics.ListCreateAPIView):
     queryset = Player.objects.all()
     serializer_class = PlayerSerializer
-    permission_classes = [APIKeyRequired]
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
+    filter_fields = [field.name for field in Player._meta.fields]
     search_fields = [field.name for field in Player._meta.fields]
 
 
@@ -20,7 +21,7 @@ class PlayerDetail(generics.RetrieveUpdateDestroyAPIView):
 class IPList(generics.ListCreateAPIView):
     serializer_class = IPSerializer
     permission_classes = [FullAccessKeyRequired]
-    filter_backends = (filters.SearchFilter,)
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter,)
     search_fields = ['player__name', 'ip', 'first_used', 'last_used']
 
     def get_queryset(self):

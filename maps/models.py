@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
 
+
 class Author(models.Model):
     """ Course Author model """
     name = models.CharField(unique=True, max_length=50)
@@ -68,7 +69,7 @@ class Map(models.Model):
 
 class Course(models.Model):
     """ Course model """
-    map = models.ForeignKey(Map, on_delete=models.CASCADE)
+    map = models.ForeignKey(Map, on_delete=models.CASCADE, related_name='courses')
 
     author = models.ForeignKey(
         Author,
@@ -100,7 +101,7 @@ class Course(models.Model):
 
 class Zone(models.Model):
     """ Zone model """
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='zones')
     start = models.CharField(max_length=60)
     end = models.CharField(max_length=60)
 
