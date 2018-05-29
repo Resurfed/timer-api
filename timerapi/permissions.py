@@ -5,8 +5,7 @@ from keys.models import Key
 class APIKeyRequired(permissions.BasePermission):
     @staticmethod
     def get_key(request):
-
-        key = request.META.get('HTTP_API_KEY', '')
+        key = request.META.get('HTTP_API_KEY', None)
 
         if key is None:
             return None

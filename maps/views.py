@@ -6,6 +6,7 @@ from .serializers import MapSerializer, ZoneSerializer, CourseSerializer, Author
 from .filters import MapFilter, CourseFilter, ZoneFilter
 from django_filters import rest_framework as filters
 
+
 class MapList(generics.ListCreateAPIView):
     queryset = Map.objects.all()
     serializer_class = MapSerializer

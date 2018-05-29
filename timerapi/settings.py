@@ -27,7 +27,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '=u^6^m@f=v!b!$4bp38l*5w3me+d)8ei^imlm
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = os.environ.get("DEBUG", '').lower() == 'true'
+DEBUG = True
+
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -60,7 +61,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'timerapi.print_queries.SQLPrintingMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'timerapi.urls'
@@ -89,8 +92,12 @@ WSGI_APPLICATION = 'timerapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'timer',
+        'USER': 'root',
+        'PASSWORD': 'mariadb',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
 

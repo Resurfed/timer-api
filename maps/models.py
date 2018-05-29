@@ -66,13 +66,10 @@ class Map(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ['-id']
-
 
 class Course(models.Model):
     """ Course model """
-    map = models.ForeignKey(Map, on_delete=models.CASCADE)
+    map = models.ForeignKey(Map, on_delete=models.CASCADE, related_name='courses')
 
     author = models.ForeignKey(
         Author,
@@ -104,7 +101,7 @@ class Course(models.Model):
 
 class Zone(models.Model):
     """ Zone model """
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='zones')
     start = models.CharField(max_length=60)
     end = models.CharField(max_length=60)
 
