@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '=u^6^m@f=v!b!$4bp38l*5w3me+d)8ei^imlm
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-DEBUG = True
+DEBUG = (os.environ.get("DEBUG", '').lower() == 'true')
 
 ALLOWED_HOSTS = ['*']
 
@@ -167,3 +167,18 @@ REST_FRAMEWORK = {
 }
 
 INTERNAL_IPS = ['127.0.0.1', ]
+
+'''
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': [
+            '127.0.0.1:11211',
+        ],
+        'KEY_PREFIX': 'timer:',
+    },
+}
+
+CACHE_MACHINE_USE_REDIS = True
+REDIS_BACKEND = 'redis://localhost:6379'
+'''
