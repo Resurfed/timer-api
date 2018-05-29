@@ -23,6 +23,3 @@ class ZoneFilter(filters.FilterSet):
     class Meta:
         model = Zone
         fields = {'course': ['exact', 'in']}
-
-
-

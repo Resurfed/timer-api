@@ -19,7 +19,7 @@ class SQLPrintingMiddleware(MiddlewareMixin):
     """
 
     def process_response(self, request, response):
-        if (len(connection.queries) == 0 or request.path_info.startswith('/favicon.ico')):
+        if connection.queries == 0 or request.path_info.startswith('/favicon.ico'):
             return response
 
         indentation = 2
